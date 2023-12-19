@@ -1,27 +1,45 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Locator } from '@playwright/test';
 
-test.describe('Describe playwright test', async () => {
+test.describe('Playwright homework 2', async () => {
 
 
-  test.beforeEach(async () => {
-    console.log('4');
+  test('Validate Category and Buttons', async ({ page }) => {
+
+    await test.step("Visit home page and validate available categories", async () => {
+      await page.goto('', { waitUntil: "domcontentloaded" });
+      const actualCategoryCount: number = await page.locator('.card-body').count();
+      const expectedCategoryTitle: string[] = [
+        "Elements",
+        "Forms",
+        "Alerts, Frame & Windows",
+        "Widgets",
+        "Interactions",
+        "Book Store Application"]
+
+      const actualCategoryTitle: string[] = [];
+
+      for (let index = 0; index < actualCategoryCount; index++) {
+        const categoryTitle: string = await page.locator('.card-body h5').nth(index).textContent();
+        actualCategoryTitle.push(categoryTitle);
+      }
+
+      expect(actualCategoryTitle).toEqual(expectedCategoryTitle);
+    })
+
+    await test.step("Buttons test", async () => {
+      await page.goto('', { waitUntil: "domcontentloaded" });
+      const elementCategory: Locator = page.locator('.card-body', { has: page.getByText("Elements") })
+      await elementCategory.click();
+      await page.getByText("Buttons").click();
+      await expect(page).toHaveURL('https://demoqa.com/buttons')
+      await page.locator('#doubleClickBtn').dblclick()
+      expect(await page.locator('#doubleClickMessage').textContent()).toEqual('You have done a double click');
+      await page.locator('#rightClickBtn').click({ button: "right" });
+      expect(await page.locator('#rightClickMessage').textContent()).toEqual('You have done a right click');
+      const dynamicButton: Locator = await page.getByRole('button', { name: 'Click Me', exact: true });
+      await dynamicButton.click();
+      expect(await page.locator('#dynamicClickMessage').textContent()).toEqual('You have done a dynamic click');
+    })
+
   })
-
-  test('has title', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
-
-    // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle(/Playwright/);
-  });
-
-  test('get started link', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
-
-    // Click the get started link.
-    await page.getByRole('link', { name: 'Get started' }).click();
-
-    // Expects page to have a heading with the name of Installation.
-    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-  });
-
 });
