@@ -6,7 +6,7 @@ test.describe('Open Home page in browser and validate visible categories', async
   let page: Page;
   let homePage;
 
-  test('Visit homepage', async ({ browser }) => {
+  test.beforeAll('Visit homepage', async ({ browser }) => {
     page = await browser.newPage({ waitUntil: "domcontentloaded" });
     homePage = new HomePage(page);
     await homePage.visitHomePage();
