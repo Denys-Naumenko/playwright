@@ -33,7 +33,6 @@ export default class ElementsPage {
     async checkDoubleClick(): Promise<void> {
         await this.doubleClickBtn.dblclick();
         expect(await this.doubleClickMessage.textContent()).toEqual('You have done a double click');
-        console.log(this.doubleClickMessage.textContent())
     }
 
     async checkRightClick(): Promise<void> {
