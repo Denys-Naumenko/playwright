@@ -1,4 +1,4 @@
-import { Page, Locator, type, expect } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { config } from "../config/config";
 
 export default class LoginPage {
@@ -36,5 +36,11 @@ export default class LoginPage {
         expect(await this.userNameValue.textContent()).toEqual(config.userName);
     }
 
+    async loginUser(): Promise<void>{
+       await this.clickLoginButton();
+       await this.typeUserName();
+       await this.typePassword();
+       await this.clickLoginButton();
+    }
 
 };
