@@ -10,7 +10,10 @@
   "devDependencies": {
     "@playwright/test": "^1.40.1",
     "@types/node": "^20.10.4",
+    "axios": "^1.6.5",
+    "axios-cookiejar-support": "^5.0.0",
     "dotenv": "^16.3.1",
-    "save-dev": "^0.0.1-security"
+    "save-dev": "^0.0.1-security",
+    "tough-cookie": "^4.1.3"
   }
 }
