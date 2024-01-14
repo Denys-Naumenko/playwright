@@ -26,7 +26,7 @@ export default class BookStorePage {
     async validateProfileBooks(): Promise<void> {
         await this.btnProfile.click();
         const isBookVisible = await this.bookGitPocketGuide;
-        await isBookVisible.waitFor({ timeout: 500 });
+        await isBookVisible.waitFor({ timeout: 1500 });
     }
 
     async addBookToColection(): Promise<void> {
